@@ -79,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       return null;
                     },
+                    obscureText: true,
                     decoration: InputDecoration(
                         hintText: "Enter Password",
                         prefixIcon: Icon(

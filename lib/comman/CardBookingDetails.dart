@@ -61,14 +61,14 @@ class CardBookingDetails extends StatelessWidget {
                               MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  "${DateFormat("d EEE").format(ticketDetails.data.bookingRequest.reqDate)}",
+                                  "${DateFormat("d EEE").format(DateTime.now())}",
                                   style: TextStyle(
                                       fontWeight:
                                       FontWeight.w700,
                                       fontSize: 13),
                                 ),
                                 Text(
-                                  "${DateFormat("MMM d").format(ticketDetails.data.bookingRequest.reqDate)}",
+                                  "${DateFormat("MMM d").format(DateTime.now())}",
                                   style: TextStyle(
                                       fontWeight:
                                       FontWeight.w500,
@@ -133,7 +133,7 @@ class CardBookingDetails extends StatelessWidget {
                                 MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(
-                                    "${DateFormat("hh:mm").format(ticketDetails.data.bookingRequest.reqDate)}",
+                                    "${DateFormat("hh:mm").format(DateTime.now())}",
                                     style: TextStyle(
                                         fontWeight:
                                         FontWeight.w700,

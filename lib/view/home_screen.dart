@@ -96,306 +96,328 @@ class _HomeScreenState extends State<HomeScreen> {
               http.Response response = snapshot.data;
               print(response.body);
               if (response.statusCode == 200) {
-                ParkingDetail parkingDetail =
-                    ParkingDetail.fromJson(jsonDecode(response.body));
-                totalPark = parkingDetail.data.totalParkingSlot;
-                occupiedParking = parkingDetail.data.occupiedParkingSlots;
-                freeParking = parkingDetail.data.freeParkingSlots;
-                print("$totalPark  ==  $occupiedParking  ==  $freeParking");
-                return Container(
-                  margin:
-                      EdgeInsets.only(top: 10, right: 18, left: 18, bottom: 5),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              color: Color(0xff363636),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xbfED2F2F), blurRadius: 5)
-                              ]),
-                          child: DottedBorder(
-                            borderType: BorderType.RRect,
-                            radius: Radius.circular(15),
-                            padding: EdgeInsets.all(15),
-                            color: Color(0xffFAC758),
-                            dashPattern: [6],
-                            strokeWidth: 2,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                              clipBehavior: Clip.antiAlias,
-                              child: Container(
-                                height: 100,
-                                width: MediaQuery.of(context).size.width,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "${parkingDetail.data.totalParkingSlot}",
-                                      style: TextStyle(
-                                          color: Color(0xefffffff),
-                                          fontSize: 55,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    Text(
-                                      "Total Spots",
-                                      style: TextStyle(
-                                          color: Color(0x6fFAC758),
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w700),
-                                    )
-                                  ],
+                ParkingDetail parkingDetail = ParkingDetail.fromJson(jsonDecode(response.body));
+                if(parkingDetail.status==200) {
+                  totalPark = parkingDetail.data.totalParkingSlot;
+                  occupiedParking = parkingDetail.data.occupiedParkingSlots;
+                  freeParking = parkingDetail.data.freeParkingSlots;
+                  print("$totalPark  ==  $occupiedParking  ==  $freeParking");
+                  return Container(
+                    margin:
+                    EdgeInsets.only(top: 10, right: 18, left: 18, bottom: 5),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: Color(0xff363636),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0xbfED2F2F), blurRadius: 5)
+                                ]),
+                            child: DottedBorder(
+                              borderType: BorderType.RRect,
+                              radius: Radius.circular(15),
+                              padding: EdgeInsets.all(15),
+                              color: Color(0xffFAC758),
+                              dashPattern: [6],
+                              strokeWidth: 2,
+                              child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(15)),
+                                clipBehavior: Clip.antiAlias,
+                                child: Container(
+                                  height: 100,
+                                  width: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "${parkingDetail.data
+                                            .totalParkingSlot}",
+                                        style: TextStyle(
+                                            color: Color(0xefffffff),
+                                            fontSize: 55,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        "Total Spots",
+                                        style: TextStyle(
+                                            color: Color(0x6fFAC758),
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w700),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 15),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  height: 255,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff292929),
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color(0x7f0C2610),
-                                            blurRadius: 5,
-                                            spreadRadius: 1)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Flexible(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text(
-                                                "${parkingDetail.data.occupiedParkingSlots}",
-                                                style: TextStyle(
-                                                    color: Color(0xefffffff),
-                                                    fontSize: 65,
-                                                    fontWeight:
-                                                        FontWeight.w700)),
-                                            Container(
-                                              alignment: Alignment.topRight,
-                                              margin:
-                                                  EdgeInsets.only(right: 35),
-                                              child: Text("Occupied",
+                          Container(
+                            margin: EdgeInsets.only(top: 15),
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    height: 255,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff292929),
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color(0x7f0C2610),
+                                              blurRadius: 5,
+                                              spreadRadius: 1)
+                                        ]),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .center,
+                                      children: <Widget>[
+                                        Flexible(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                  "${parkingDetail.data
+                                                      .occupiedParkingSlots}",
                                                   style: TextStyle(
-                                                      color: Color(0x9f0ABC25),
-                                                      fontSize: 21,
+                                                      color: Color(0xefffffff),
+                                                      fontSize: 65,
                                                       fontWeight:
-                                                          FontWeight.w700)),
-                                            ),
-                                          ],
+                                                      FontWeight.w700)),
+                                              Container(
+                                                alignment: Alignment.topRight,
+                                                margin:
+                                                EdgeInsets.only(right: 35),
+                                                child: Text("Occupied",
+                                                    style: TextStyle(
+                                                        color: Color(
+                                                            0x9f0ABC25),
+                                                        fontSize: 21,
+                                                        fontWeight:
+                                                        FontWeight.w700)),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Flexible(
-                                        child: SpringButton(
-                                          SpringButtonType.OnlyScale,
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                color: Color(0xff283425),
-                                                borderRadius: BorderRadius.only(
-                                                    bottomRight:
-                                                        Radius.circular(20),
-                                                    bottomLeft:
-                                                        Radius.circular(20))),
-                                            alignment: Alignment.center,
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.add,
-                                                color: Color(0xff0ABC25),
-                                                size: 70,
+                                        Flexible(
+                                          child: SpringButton(
+                                            SpringButtonType.OnlyScale,
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff283425),
+                                                  borderRadius: BorderRadius
+                                                      .only(
+                                                      bottomRight:
+                                                      Radius.circular(20),
+                                                      bottomLeft:
+                                                      Radius.circular(20))),
+                                              alignment: Alignment.center,
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: Color(0xff0ABC25),
+                                                  size: 70,
+                                                ),
                                               ),
                                             ),
+                                            onTap: () async {
+                                              setState(() {
+                                                if (occupiedParking >=
+                                                    totalPark) {
+                                                  initValue();
+                                                  scaffoldStateKey.currentState
+                                                      .showSnackBar(SnackBar(
+                                                    content: Text(
+                                                        "No parking place free"),
+                                                    backgroundColor: Colors.red,
+                                                    duration: Duration(
+                                                        milliseconds: 800),
+                                                  ));
+                                                } else {
+                                                  add();
+                                                }
+                                              });
+                                            },
                                           ),
-                                          onTap: () async {
-                                            setState(() {
-                                              if (occupiedParking >=
-                                                  totalPark) {
-                                                initValue();
-                                                scaffoldStateKey.currentState
-                                                    .showSnackBar(SnackBar(
-                                                  content: Text(
-                                                      "No parking place free"),
-                                                  backgroundColor: Colors.red,
-                                                  duration: Duration(
-                                                      milliseconds: 800),
-                                                ));
-                                              } else {
-                                                add();
-                                              }
-                                            });
-                                          },
-                                        ),
-                                      )
-                                    ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: 15),
-                              Expanded(
-                                child: Container(
-                                  height: 255,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xff292929),
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Color(0x5f480A0A),
-                                            blurRadius: 5,
-                                            spreadRadius: 1)
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Flexible(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text(
-                                                "${parkingDetail.data.freeParkingSlots}",
-                                                style: TextStyle(
-                                                    color: Color(0xefffffff),
-                                                    fontSize: 65,
-                                                    fontWeight:
-                                                        FontWeight.w700)),
-                                            Container(
-                                              alignment: Alignment.topRight,
-                                              margin:
-                                                  EdgeInsets.only(right: 35),
-                                              child: Text("Free",
+                                SizedBox(width: 15),
+                                Expanded(
+                                  child: Container(
+                                    height: 255,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff292929),
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Color(0x5f480A0A),
+                                              blurRadius: 5,
+                                              spreadRadius: 1)
+                                        ]),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .center,
+                                      children: <Widget>[
+                                        Flexible(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                  "${parkingDetail.data
+                                                      .freeParkingSlots}",
                                                   style: TextStyle(
-                                                      color: Color(0x9fFF3B00),
-                                                      fontSize: 21,
+                                                      color: Color(0xefffffff),
+                                                      fontSize: 65,
                                                       fontWeight:
-                                                          FontWeight.w700)),
-                                            ),
-                                          ],
+                                                      FontWeight.w700)),
+                                              Container(
+                                                alignment: Alignment.topRight,
+                                                margin:
+                                                EdgeInsets.only(right: 35),
+                                                child: Text("Free",
+                                                    style: TextStyle(
+                                                        color: Color(
+                                                            0x9fFF3B00),
+                                                        fontSize: 21,
+                                                        fontWeight:
+                                                        FontWeight.w700)),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Flexible(
-                                        child: SpringButton(
-                                          SpringButtonType.WithOpacity,
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                color: Color(0xff261E1E),
-                                                borderRadius: BorderRadius.only(
-                                                    bottomRight:
-                                                        Radius.circular(20),
-                                                    bottomLeft:
-                                                        Radius.circular(20))),
-                                            alignment: Alignment.center,
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.remove,
-                                                color: Color(0xdfFF3B00),
-                                                size: 70,
+                                        Flexible(
+                                          child: SpringButton(
+                                            SpringButtonType.WithOpacity,
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff261E1E),
+                                                  borderRadius: BorderRadius
+                                                      .only(
+                                                      bottomRight:
+                                                      Radius.circular(20),
+                                                      bottomLeft:
+                                                      Radius.circular(20))),
+                                              alignment: Alignment.center,
+                                              child: Center(
+                                                child: Icon(
+                                                  Icons.remove,
+                                                  color: Color(0xdfFF3B00),
+                                                  size: 70,
+                                                ),
                                               ),
                                             ),
+                                            onTap: () {
+                                              setState(() {
+                                                remove();
+                                              });
+                                            },
                                           ),
-                                          onTap: () {
-                                            setState(() {
-                                             remove();
-                                            });
-                                          },
-                                        ),
-                                      )
-                                    ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: 25,
+                          Container(
+                            margin: EdgeInsets.only(
+                              top: 25,
+                            ),
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xffE85900),
+                                      Color(0xffFAC758),
+                                    ],
+                                    begin: Alignment(1, 6),
+                                    end: Alignment(-1, -5)),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(30),
+                              onTap: () {
+                                dialogEnterMobile();
+                                _phoneNumber.clear();
+                                _vehicleTag.clear();
+                                _textFiledNumber1.clear();
+                                _textFiledNumber2.clear();
+                                _textFiledNumber3.clear();
+                                _textFiledNumber4.clear();
+                                _textFiledNumber5.clear();
+                                _textFiledNumber6.clear();
+                                setState(() {
+                                  remove();
+                                });
+                              },
+                              child: Center(
+                                  child: Text(
+                                    "₹ Create New User",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                        fontSize: 18),
+                                  )),
+                            ),
                           ),
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xffE85900),
-                                    Color(0xffFAC758),
-                                  ],
-                                  begin: Alignment(1, 6),
-                                  end: Alignment(-1, -5)),
-                              borderRadius: BorderRadius.circular(30)),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(30),
-                            onTap: () {
-                              dialogEnterMobile();
-                              _phoneNumber.clear();
-                              _vehicleTag.clear();
-                              _textFiledNumber1.clear();
-                              _textFiledNumber2.clear();
-                              _textFiledNumber3.clear();
-                              _textFiledNumber4.clear();
-                              _textFiledNumber5.clear();
-                              _textFiledNumber6.clear();
-                              setState(() {
-                               remove();
-                              });
-                            },
-                            child: Center(
-                                child: Text(
-                              "₹ Create New User",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  fontSize: 18),
-                            )),
+                          Container(
+                            margin: EdgeInsets.only(
+                              top: 18,
+                            ),
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xff0012E8),
+                                      Color(0xff9058FA),
+                                    ],
+                                    begin: Alignment(1, 6),
+                                    end: Alignment(-1, -5)),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(30),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (_) => ScanQRCodeScreen()));
+                              },
+                              child: Center(
+                                  child: Text(
+                                    "Scan QR Code",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                        fontSize: 17),
+                                  )),
+                            ),
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: 18,
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    Color(0xff0012E8),
-                                    Color(0xff9058FA),
-                                  ],
-                                  begin: Alignment(1, 6),
-                                  end: Alignment(-1, -5)),
-                              borderRadius: BorderRadius.circular(30)),
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(30),
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => ScanQRCodeScreen()));
-                            },
-                            child: Center(
-                                child: Text(
-                              "Scan QR Code",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  fontSize: 17),
-                            )),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }else if (parkingDetail.status==404){
+                    initValue();
+
+                }
               }
             }
             return Center(
