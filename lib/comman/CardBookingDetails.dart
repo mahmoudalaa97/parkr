@@ -9,7 +9,6 @@ class CardBookingDetails extends StatelessWidget {
   const CardBookingDetails({Key key, this.ticketDetails}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return Container(
       height: 360,
       padding: EdgeInsets.only(

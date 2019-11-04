@@ -9,7 +9,7 @@ class Api{
 
   Future<http.Response> login(String _email,String _password) async {
 
-    var response = await http.post("https://api.parkr.in/login", body: {
+    var response = await http.post("http://api.staging.parkr.in/login", body: {
       "email": _email,
       "password": _password,
       "device_token":
@@ -23,7 +23,7 @@ class Api{
   }
   Future<http.Response> getDetails(String input) async {
     String token = await sharedPref.readToken();
-    return await http.post("https://api.parkr.in/locations/parking-details", body: {
+    return await http.post("http://api.staging.parkr.in/locations/parking-details", body: {
       "flag": "$input",
     }, headers: {
       "Authorization": "$token",
@@ -66,7 +66,7 @@ class Api{
     String token = await sharedPref.readToken();
     print(token);
     var response;
-    response = http.get("https://api.parkr.in/agents/bookings/$input",
+    response = http.get("http://api.staging.parkr.in/agents/bookings/$input",
         headers: {
           "Authorization": "$token",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -78,7 +78,7 @@ class Api{
     String token = await sharedPref.readToken();
     print(token);
     Future<http.Response> response;
-    response = http.post("https://api.parkr.in/agents/checkout", body: {
+    response = http.post("http://api.staging.parkr.in/agents/checkout", body: {
       "booking_id": "$bookingID",
       "payment_status": "$paymentState"
     }, headers: {
@@ -91,7 +91,7 @@ class Api{
     String token = await sharedPref.readToken();
     print(token);
     Future<http.Response> response;
-    response = http.post("https://api.parkr.in/agents/check-in", body: {
+    response = http.post("http://api.staging.parkr.in/agents/check-in", body: {
       "booking_id": "$bookingID",
     }, headers: {
       "Authorization": "$token",

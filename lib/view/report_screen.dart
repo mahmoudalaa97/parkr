@@ -23,10 +23,10 @@ class _ReportScreenState extends State<ReportScreen> {
     String token = await sharedPref.readToken();
     print(token);
     var response;
-    response = http.get("https://api.parkr.in/agents/bookings?page=$input",
+    response = http.get("http://api.staging.parkr.in/agents/bookings",
         headers: {
           "Authorization": "$token",
-          "Content-Type": "application/x-www-form-urlencoded"
+          "page":"$input",
         });
    streamController.add(await response);
   }

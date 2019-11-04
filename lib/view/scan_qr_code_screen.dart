@@ -153,11 +153,10 @@ class _ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
             ),
             backgroundColor: Colors.red,
           ));
-        } else if (currentStatus == "check-in") {
-          http.Response responseDetails = await api.getDetails("in");
-          print(responseDetails.body);
-          String messagePark = json.decode(responseDetails.body)["message"];
-          int statusPark = json.decode(responseDetails.body)["status"];
+        } else if (currentStatus == "check-in") {    http.Response responseDetails = await api.getDetails("in");
+        print(responseDetails.body);
+        String messagePark = json.decode(responseDetails.body)["message"];
+        int statusPark = json.decode(responseDetails.body)["status"];
           if (statusPark != 404) {
             scaffoldStateKey.currentState.showSnackBar(SnackBar(
               content: Text(

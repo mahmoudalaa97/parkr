@@ -132,11 +132,11 @@ class PaymentInfo {
   String toJson() => json.encode(toMap());
 
   factory PaymentInfo.fromMap(Map<String, dynamic> json) => PaymentInfo(
-    paymentStatus: json["payment_status"] == null ? null : json["payment_status"],
-    paymentMode: json["payment_mode"] == null ? null : json["payment_mode"],
-    amount: json["amount"] == null ? null : json["amount"],
+    paymentStatus: json["payment_status"] == null ? "" : json["payment_status"],
+    paymentMode: json["payment_mode"] == null ? "": json["payment_mode"],
+    amount: json["amount"] == null ?"": json["amount"],
     paymentDate: json["payment_date"] == null ? null : DateTime.parse(json["payment_date"]),
-    status: json["status"] == null ? null : json["status"],
+    status: json["status"] == null ? "" : json["status"],
   );
 
   Map<String, dynamic> toMap() => {

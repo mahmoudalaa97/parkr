@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:parkr/comman/CardBookingDetails.dart';
-import 'package:parkr/comman/CustomDialog.dart';
 import 'package:parkr/model/TicketDetails.dart';
 import 'package:parkr/service/API.dart';
 import 'package:http/http.dart'as http;
@@ -21,6 +20,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
   Api api =Api();
   String paymentState = "paid";
   int selectedPaymentState=0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +87,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           rowItem(
                                               title: "Payment Date",
                                               content:
-                                              "${DateFormat("yyyy-MM-dd").format(ticketDetails.data.bookingRequest.paymentInfo[0].paymentDate)}"),
+                                              "${ticketDetails.data.bookingRequest.paymentInfo.length>0?DateFormat("yyyy-MM-dd").format(ticketDetails.data.bookingRequest.paymentInfo[0].paymentDate):""}"),
                                           rowItem(
                                               title: "Grand Total",
                                               content:
@@ -212,6 +212,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                             onPressed: ticketDetails.data.bookingRequest.status=="booked"||ticketDetails.data.bookingRequest.status=="check-in"?() {
                                               showDialog(
                                                   context: context,
+                                                  barrierDismissible: false,
                                                   builder: (context) {
                                                     return AlertDialog(
                                                       title: Text('Sure to checkout?'),
@@ -229,13 +230,20 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                 paymentState)
                                                                 .then((responses) {
                                                                   Navigator.pop(context);
-                                                              String message=json.decode(responses.body)["message"];
-                                                              int status=json.decode(responses.body)["status"];
-                                                              print(message);
-                                                              print(status.toString());
-                                                              if(status==422&&message=="Please check-in before checking out"){
-                                                                scaffoldStateKey.currentState.showSnackBar(SnackBar(content: Text("$message",style: TextStyle(color: Colors.white),),backgroundColor: Colors.green,),
-                                                                );
+                                                                  if(responses.statusCode==200){
+                                                                    String message=json.decode(responses.body)["message"];
+                                                                    api.getDetails("out");
+//                                                                    String current_status=json.decode(responses.body)["current_status"];
+                                                                    showDialogAlert(message, Colors.green);
+                                                                  }
+                                                              if(responses.statusCode==422){
+                                                                String message=json.decode(responses.body)["message"];
+                                                                int status=json.decode(responses.body)["status"];
+                                                                print(message);
+                                                                print(status.toString());
+//                                                                scaffoldStateKey.currentState.showSnackBar(SnackBar(content: Text("$message",style: TextStyle(color: Colors.white),),backgroundColor: Colors.green,),
+//                                                              );
+                                                              showDialogAlert(message, Colors.red);
                                                               }
 
                                                             });
@@ -350,7 +358,23 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
     );
   }
 
-
+void showDialogAlert(String message,Color color){
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          content:Text("$message",style: TextStyle(color: color),),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Close')),
+          ],
+        );
+      });
+}
   rowItem({String title, String content}) {
     return Column(
       children: <Widget>[

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:parkr/comman/CustomDialog.dart';
 import 'package:parkr/service/API.dart';
 import 'package:parkr/view/scan_qr_code_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spring_button/spring_button.dart';
 import '../model/ParkingDetails.dart';
 
@@ -67,6 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void initValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token=prefs.getString("token");
+    if(token!=null)
     streamController.sink.add(await api.getDetails("details"));
   }
 
