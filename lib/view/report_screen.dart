@@ -49,7 +49,6 @@ class _ReportScreenState extends State<ReportScreen> {
       stream: streamController.stream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          print(snapshot.data);
           http.Response response = snapshot.data;
           if (response.statusCode == 200) {
             ReportDetails reportDetails = ReportDetails.fromJson(response.body);

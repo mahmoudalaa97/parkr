@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:parkr/comman/CustomDialog.dart';
+import 'package:parkr/comman/pin_code_fields.dart';
 import 'package:parkr/service/API.dart';
 import 'package:parkr/view/scan_qr_code_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,21 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _vehicleTag = TextEditingController();
   GlobalKey<ScaffoldState> scaffoldStateKey = GlobalKey<ScaffoldState>();
   Api api = Api();
-  TextEditingController _textFiledNumber1 = TextEditingController();
-  TextEditingController _textFiledNumber2 = TextEditingController();
-  TextEditingController _textFiledNumber3 = TextEditingController();
-  TextEditingController _textFiledNumber4 = TextEditingController();
-  TextEditingController _textFiledNumber5 = TextEditingController();
-  TextEditingController _textFiledNumber6 = TextEditingController();
   GlobalKey<FormState> formStateOTPKey = GlobalKey<FormState>();
   bool autoValidatedOTP = false;
   bool isValidaOTP = true;
-  FocusNode nodeNumber1 = FocusNode();
-  FocusNode nodeNumber2 = FocusNode();
-  FocusNode nodeNumber3 = FocusNode();
-  FocusNode nodeNumber4 = FocusNode();
-  FocusNode nodeNumber5 = FocusNode();
-  FocusNode nodeNumber6 = FocusNode();
+  String otp;
   int totalPark;
   int freeParking;
   int occupiedParking;
@@ -323,9 +313,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ),
                                             onTap: () {
-                                              setState(() {
+
                                                 remove();
-                                              });
+
                                             },
                                           ),
                                         )
@@ -360,15 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 dialogEnterMobile();
                                 _phoneNumber.clear();
                                 _vehicleTag.clear();
-                                _textFiledNumber1.clear();
-                                _textFiledNumber2.clear();
-                                _textFiledNumber3.clear();
-                                _textFiledNumber4.clear();
-                                _textFiledNumber5.clear();
-                                _textFiledNumber6.clear();
-                                setState(() {
-                                  remove();
-                                });
+
                               },
                               child: Center(
                                   child: Text(
@@ -581,18 +563,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   dialogVerifyOTP() {
-    _textFiledNumber1.clear();
-    _textFiledNumber2.clear();
-    _textFiledNumber3.clear();
-    _textFiledNumber4.clear();
-    _textFiledNumber5.clear();
-    _textFiledNumber6.clear();
-    String number1;
-    String number2;
-    String number3;
-    String number4;
-    String number5;
-    String number6;
     var padding = const EdgeInsets.all(1.5);
     showDialog(
       context: context,
@@ -602,268 +572,46 @@ class _HomeScreenState extends State<HomeScreen> {
         return CustomDialog(
           title: "Verify OTP",
           subTitle: "Please enter the OTP Bellow for Verification",
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Form(
-                key: formStateOTPKey,
-                autovalidate: autoValidatedOTP,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: padding,
-                        child: TextFormField(
-                          focusNode: nodeNumber1,
-                          controller: _textFiledNumber1,
-                          style: TextStyle(fontSize: 25),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              counterText: "",
-                              contentPadding: EdgeInsets.all(15)),
-                          onFieldSubmitted: (term) {
-                            if (term.isNotEmpty) {
-                              setState(() {
-                                FocusScope.of(context)
-                                    .requestFocus(nodeNumber2);
-                              });
-                            }
-                          },
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              FocusScope.of(context).requestFocus(nodeNumber2);
-                              _textFiledNumber2.clear();
-                            }
-                          },
-                          onSaved: (value) {
-                            setState(() {
-                              number1 = value;
-                            });
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) return "*";
+          content:PinCodeTextField(
+            length: 6,
+            obsecureText: false,
+            animationType: AnimationType.fade,
+            shape: PinCodeFieldShape.box,
+            animationDuration: Duration(milliseconds: 300),
+            borderRadius: BorderRadius.circular(5),
+            autoFocus: true,
+            fieldHeight: 50,
+            fieldWidth: 40,
+            textInputType: TextInputType.number,
 
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: padding,
-                        child: TextFormField(
-                          focusNode: nodeNumber2,
-                          controller: _textFiledNumber2,
-                          style: TextStyle(fontSize: 25),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              counterText: "",
-                              contentPadding: EdgeInsets.all(15)),
-                          onFieldSubmitted: (term) {
-                            if (term.isNotEmpty)
-                              FocusScope.of(context).requestFocus(nodeNumber3);
-                          },
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              FocusScope.of(context).requestFocus(nodeNumber3);
-                              _textFiledNumber3.clear();
-                            }
-                          },
-                          onSaved: (value) {
-                            setState(() {
-                              number2 = value;
-                            });
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) return "*";
-
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: padding,
-                        child: TextFormField(
-                          focusNode: nodeNumber3,
-                          controller: _textFiledNumber3,
-                          style: TextStyle(fontSize: 25),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              counterText: "",
-                              contentPadding: EdgeInsets.all(15)),
-                          onFieldSubmitted: (term) {
-                            if (term.isNotEmpty)
-                              FocusScope.of(context).requestFocus(nodeNumber4);
-                          },
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              FocusScope.of(context).requestFocus(nodeNumber4);
-                              _textFiledNumber4.clear();
-                            }
-                          },
-                          onSaved: (value) {
-                            setState(() {
-                              number3 = value;
-                            });
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) return "*";
-
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: padding,
-                        child: TextFormField(
-                          focusNode: nodeNumber4,
-                          controller: _textFiledNumber4,
-                          style: TextStyle(fontSize: 25),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              counterText: "",
-                              contentPadding: EdgeInsets.all(15)),
-                          onFieldSubmitted: (term) {
-                            if (term.isNotEmpty)
-                              FocusScope.of(context).requestFocus(nodeNumber5);
-                          },
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              FocusScope.of(context).requestFocus(nodeNumber5);
-                              _textFiledNumber5.clear();
-                            }
-                          },
-                          onSaved: (value) {
-                            setState(() {
-                              number4 = value;
-                            });
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) return "*";
-
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: padding,
-                        child: TextFormField(
-                          focusNode: nodeNumber5,
-                          controller: _textFiledNumber5,
-                          style: TextStyle(fontSize: 25),
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              counterText: "",
-                              contentPadding: EdgeInsets.all(15)),
-                          onFieldSubmitted: (term) {
-                            if (term.isNotEmpty)
-                              FocusScope.of(context).requestFocus(nodeNumber6);
-                          },
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              FocusScope.of(context).requestFocus(nodeNumber6);
-                              _textFiledNumber6.clear();
-                            }
-                          },
-                          onSaved: (value) {
-                            setState(() {
-                              number5 = value;
-                            });
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) return "*";
-
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: padding,
-                        child: TextFormField(
-                          focusNode: nodeNumber6,
-                          controller: _textFiledNumber6,
-                          style: TextStyle(fontSize: 25),
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              counterText: "",
-                              contentPadding: EdgeInsets.all(15)),
-                          onFieldSubmitted: (term) {},
-                          onSaved: (value) {
-                            setState(() {
-                              number6 = value;
-                            });
-                          },
-                          validator: (value) {
-                            if (value.isEmpty) return "*";
-
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          onTapButton: () {
-            if (formStateOTPKey.currentState.validate()) {
-              formStateOTPKey.currentState.save();
-              String otp = "$number1$number2$number3$number4$number5$number6";
-              api.verify(_phoneNumber.text, otp).then((responses) {
-                http.Response response = responses;
-                if (response.statusCode == 200) {
-                  String status = json.decode(response.body)["status"];
-                  String message = json.decode(response.body)["message"];
-                  if (status == "success") {
-                    dialogSuccess();
-                  } else {
-                    setStateLocal(() {
-                      isValidaOTP = false;
-                      print(isValidaOTP);
-                    });
-                  }
-                  print(status);
-                }
-              });
-            } else {
+            currentText: (value) {
               setState(() {
-                autoValidatedOTP = true;
+               otp = value;
               });
-            }
+            },
+          ) ,
+          onTapButton: () {
+             print(otp);
+             if (otp.length==6) {
+
+               api.verify(_phoneNumber.text, otp).then((responses) {
+                 http.Response response = responses;
+                 if (response.statusCode == 200) {
+                   String status = json.decode(response.body)["status"];
+                   String message = json.decode(response.body)["message"];
+                   if (status == "success") {
+                     dialogSuccess();
+                   } else {
+                     setStateLocal(() {
+                       isValidaOTP = false;
+                       print(isValidaOTP);
+                     });
+                   }
+                   print(status);
+                 }
+               });
+             }
+
           },
           textButton: "Submit",
           colorButton: Color(0xcf0ABC25),
