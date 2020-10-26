@@ -1,16 +1,26 @@
-# parkr
+# Flutter Booking Parking App [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-Application For Parking car
+A Flutter starter Booking Parking App, It has following features:
 
-## Getting Started
+  - Manage The Parking Places by Check-In and Check-Out
+  - Scan your ticket and show the all deatils about this car 
+  - Report for all the ticket status on this parking
+  - Runs on both Android & IOS.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+### Screenshots:
+<br/>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![makephotogallery.net_1580238239.jpg](assets/images.svg)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Dependencies
+
+This project is built with various awesome open sourced libraries
+
+* [http](https://pub.dev/packages/http) -  to communicate with the API.
+* [flutter_masked_text](https://pub.dev/packages/flutter_masked_text) - to Masked text input for flutter.
+* [shared_preferences](https://pub.dev/packages/shared_preferences) - to saved the auth of the user.
+
+
+## Can I hire you guys?
+Yes! We are available for hire. Visit [My Profile](https://github.com/mahmoudalaa97). We will be happy to work with you!
